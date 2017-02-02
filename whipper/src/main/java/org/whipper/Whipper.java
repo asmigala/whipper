@@ -211,6 +211,7 @@ public class Whipper {
         for(Iterator<TestResultsWriter> iter = ServiceLoader.load(TestResultsWriter.class).iterator(); iter.hasNext();){
             TestResultsWriter trw = iter.next();
             if(trw.init(init)){
+                LOG.info("Adding TestRestultsWriter");
                 out.add(trw);
             }
         }

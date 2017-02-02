@@ -36,6 +36,8 @@ public class Scenario implements TimeTracker{
     private final String id;
     private final List<Suite> suites = new LinkedList<>();
 
+    private Properties initialProperties;
+
     private long startTime = -1;
     private long endTime = -1;
 
@@ -54,6 +56,7 @@ public class Scenario implements TimeTracker{
 
     private MetaQuerySetResultMode metaQuerySetResultMode;
 
+
     /**
      * Creates a new scenario.
      *
@@ -69,6 +72,8 @@ public class Scenario implements TimeTracker{
      * @param props test properties
      */
     public void init(Properties props){
+        initialProperties = new Properties();
+        initialProperties.putAll(props);
         pingQuery = props.getProperty(Keys.PING_QUERY);
         afterQuery = props.getProperty(Keys.AFTER_QUERY);
         expectedResultsDirName = props.getProperty(Keys.EXPECTED_RESULTS_DIR);
@@ -187,6 +192,24 @@ public class Scenario implements TimeTracker{
     public String getId() {
         return id;
     }
+
+    /**
+     * Returns generic property specified in the scenario file
+     * @param name
+     */
+    public String getProperty(String name){
+        return getProperty(name, null);
+    }
+
+    /**
+     * Returns generic property specified in the scenario file
+     * @param name
+     * @param defaultValue
+     */
+    public String getProperty(String name, String defaultValue){
+        return initialProperties.getProperty(name, defaultValue);
+    }
+
 
     /**
      * Returns name of the directory with expected results.
